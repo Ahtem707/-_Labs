@@ -11,7 +11,9 @@ import com.company.shapes.ui.OutputInterface;
  * learn the complexities of Android.
  *
  */
-public class Logic 
+
+public class Logic
+
        implements LogicInterface {
     /**
      * This is a String to be used in Logging (if/when you decide you
@@ -161,5 +163,39 @@ public class Logic
     }
 
     // TODO -- add your code here
+    public static double rectangleArea (double length, double width) {
+        return length * width;
+    }
+    public static double rectanglePerimeter (double length, double width) {
+        return length * 2 + width * 2;
+    }
+    public static double circleArea (double radius) {
+        return Math.PI * Math.pow(radius, 2);
+    }
+    public static double circleCircumference (double radius) {
+        return 2 * Math.PI * radius;
+    }
 
+    public static double rightTrianglePerimeter (double base, double height) {
+        double hypotenuse = Math.sqrt(Math.pow(base,2) + Math.pow(height, 2));
+        return base + height + hypotenuse;
+    }
+    public static double rightTriangleArea (double base, double height) {
+        return (base * height) / 2;
+    }
+    public static double boxVolume (double length, double width, double depth) {
+        return length * width * depth;
+    }
+    public static double boxSurfaceArea (double length, double width, double depth) {
+        double xy = length * width;
+        double xz = length * depth;
+        double yz = width * depth;
+        return xy * 2 + xz * 2 + yz * 2;
+    }
+    public static double sphereVolume (double radius) {
+        return (4 * Math.PI * Math.pow(radius, 3))/3;
+    }
+    public static double sphereSurfaceArea (double radius) {
+        return 4 * Math.PI * Math.pow(radius, 2);
+    }
 }

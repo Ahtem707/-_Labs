@@ -27,7 +27,7 @@ public class Logic
      * results. (It is also the 'in-put' from where we get values
      * from, but it only needs 1 name, and 'out' is good enough).
      */
-    private OutputInterface mOut;
+    final private OutputInterface mOut;
 
     /**
      * This is the constructor of this class.
@@ -46,7 +46,84 @@ public class Logic
     public void process(int size) {
 
         // TODO -- add your code here
+        // выставляем размеры матрицы увеличенную в двое, с добавлением поправочных коэффициентов
+        int height = size * 2 + 1;
+        int width = size * 2 + 2;
+        // переменная которая обозначает положение по вертикальной координате
+        int accumulator = -(size+1);
 
+        // Создаем два вложенных цикла, для управления ячейками матрицы
+        for(int i=1; i<=height; i++){
+            accumulator++;
+            for (int j=1; j<=width; j++) {
+                // различные условия определяют позицию курсора и добавляют соответсвующий символ
+                if((i == 1 || i == height) && (j == 1 || j == width))
+                    mOut.print("+");
+                else if((i == 1 || i == height) && !(j == 1 || j == width))
+                    mOut.print("-");
+                else if(!(i == 1 || i == height) && (j == 1 || j == width))
+                    mOut.print("|");
+                else {
+                    // функция заполнения контента
+                    drawDiamond(size, i, j, accumulator);
+                }
+            }
+            // символ новой строки после окончания итераций
+            mOut.print("\n");
+        }
+    }
+
+    public void drawDiamond(int size, int i, int j, int accumulator){
+        int diamondRowThickness;
+        if (accumulator <= 0){
+            diamondRowThickness = i*2-2;
+        } else {
+            diamondRowThickness = (i-accumulator*2)*2-2;
+        }
+        int diamondMidpoint = size + 1;
+        int diamondBoundsLeft = diamondMidpoint - (diamondRowThickness/2-1);
+        int diamondBoundsRight = diamondMidpoint + (diamondRowThickness/2);
+        int frameTop = 1;
+        int frameBottom = size * 2 + 1;
+
+        if (j >= diamondBoundsLeft && j <= diamondBoundsRight) {
+            if (j == diamondBoundsLeft || j == diamondBoundsRight) {
+                // элементы ромбовидной рамки
+                if (i < diamondMidpoint && i > frameTop) {
+                    // верхняя часть рамки
+                    if (j == diamondBoundsLeft) {
+                        mOut.print("/");
+                    } else {
+                        mOut.print("\\");
+                    }
+                } else if (i == diamondMidpoint) {
+                    // средняя часть рамки
+                    if (j == diamondBoundsLeft) {
+                        mOut.print("<");
+                    } else {
+                        mOut.print(">");
+                    }
+                } else if (i > diamondMidpoint && i < frameBottom) {
+                    // нижняя часть рамки
+                    if (j == diamondBoundsLeft) {
+                        mOut.print("\\");
+                    } else {
+                        mOut.print("/");
+                    }
+                }
+            } else {
+                // элементы внутреннего заполнения
+                // чередуем строки === и --- по вертикали
+                if (i % 2 == 0) {
+                    mOut.print("=");
+                } else {
+                    mOut.print("-");
+                }
+            }
+        } else {
+            // пробел как заполнитель матрицы
+            mOut.print(" ");
+        }
     }
 
 }
