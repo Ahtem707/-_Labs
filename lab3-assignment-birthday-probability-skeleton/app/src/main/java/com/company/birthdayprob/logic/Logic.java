@@ -76,7 +76,21 @@ public class Logic
      */
     public double calculate(int size, int count) {
         // TODO -- add your code here
-
+        Random random = new Random();
+        int duplicateCount = 0;
+        for (int i = 0; i < count; i++) {
+            int birthdayCount[] = new int[365];
+            random.setSeed(i+1);
+            for (int j = 0; j <size ; j++) {
+                int n = random.nextInt(365);
+                birthdayCount[n]++;
+                if(birthdayCount[n] >= 2) {
+                    duplicateCount++;
+                    break;
+                }
+            }
+        }
+        return duplicateCount * 100.0 / count;
     }
     // TODO - add your code here
 }
